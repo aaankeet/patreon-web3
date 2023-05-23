@@ -13,11 +13,15 @@ function App() {
 
   async function purchaseNFT() {
     if (status === 'authenticated') {
-      const provider = await ethers.BrowserProvider(window.ethereum);
+      // Grab Provider
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      console.log(provider);
       await provider.send('eth_requestAccounts', []);
 
-      const signer = await provider.getSigner();
+      // Signer -> Current Connected User
+      const signer = provider.getSigner();
 
+      // Create Contract Instance
       const patreonContract = new ethers.Contract(contractAddress, abi, signer);
 
       // Mint Fee -> 0.5 Matic
@@ -39,7 +43,7 @@ function App() {
         messageApi.success('Patreon NFT Purchased🥳');
       });
     } else {
-      messageApi.warning('please connect wallet first');
+      messageApi.warning('please connect wallet first ⛔');
     }
   }
 
@@ -57,22 +61,9 @@ function App() {
             </div>
           </div>
           <div className={styles.creatorFrame}>
-            <img
-              src='/creator.png'
-              alt='creator'
-              className={styles.creatorImg}
-            />
-            <div className={styles.creatorName}>Julie</div>
-            <div className={styles.imgshout}>
-              Photo by{' '}
-              <a href='https://unsplash.com/@joelmott?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText'>
-                Joel Mott
-              </a>{' '}
-              on{' '}
-              <a href='https://unsplash.com/images/people?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText'>
-                Unsplash
-              </a>
-            </div>
+            <img src='/jie.jpg' alt='creator' className={styles.creatorImg} />
+            <div className={styles.creatorName}></div>
+            <div className={styles.imgshout}></div>
           </div>
         </div>
         <div className={styles.secondRow}>
